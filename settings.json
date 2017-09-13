@@ -1,6 +1,6 @@
 {
   "title": "Alex's Reviews",
-  "root": "/reviews/",
+  "root": "",
   "modules": {
     "Books": {
       "enabled": true,
