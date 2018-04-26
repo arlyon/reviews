@@ -1,52 +1,58 @@
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
     devtool: 'source-map',
+    mode: 'development',
 
-    // entry point of our application, within the `src`
-    // directory (which we add to resolve.modules below)
     entry: [
-        'index.ts',
+        'ts/index.ts',
     ],
 
-    // configure the output directory and publicPath for the devServer
     output: {
         filename: 'app.js',
         publicPath: 'dist/',
         path: path.resolve(__dirname, 'dist'),
     },
 
-    // configure the dev server to run
     devServer: {
         port: 3000,
         historyApiFallback: {
-            index: './index.html',
+            index: 'index.html',
         },
+        contentBase: 'dist/',
         inline: true,
         host: '0.0.0.0',
         disableHostCheck: true,
+        publicPath: '/'
     },
-    // tell Webpack to load TypeScript files
-    resolve: {
-        // Look for modules in .ts(x) files first, then .js
-        extensions: ['.ts', '.tsx', '.js', '.json'],
 
-        // add 'src' to the modules, so that when you import
-        // files you can do so with 'src' as the relative route
+    resolve: {
+        extensions: ['.ts', '.js', '.json'],
         modules: ['src', 'node_modules'],
     },
 
     module: {
-        loaders: [
-            // .ts(x) files should first pass through the Typescript loader, and then through babel
-            {test: /\.tsx?$/, loaders: ['babel-loader', 'ts-loader'], include: path.resolve('src')},
-            {test: /\.styl$/, loaders: ['style-loader', 'css-loader', 'stylus-loader']},
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {loader: 'babel-loader'},
+                    {loader: 'ts-loader', options: {}}
+                ],
+                include: path.resolve('src')},
+            {
+                test: /\.styl$/,
+                use: [
+                    {loader: 'style-loader'},
+                    {loader: 'css-loader'},
+                    {loader: 'stylus-loader'}
+                ]
+            },
             {
                 test: /\.(jpe?g|png|gif)$/i,
-                loaders: [
-                    'file-loader',
-                ],
+                loaders: ['file-loader'],
             },
             {
                 test: /\.svg$/,
@@ -55,7 +61,9 @@ module.exports = {
             {
                 test: /\.(woff2|woff)$/, loaders: ['file-loader'],
             },
-            {test: /\.json$/, loaders: ['json-loader']},
+            {
+                test: /\.json$/,
+                loaders: ['json-loader']},
             {
                 test: /\.(html)$/,
                 use: {
@@ -67,4 +75,14 @@ module.exports = {
             }
         ],
     },
+
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new CopyWebpackPlugin([
+                {from: 'src/static'}
+            ],
+        ),
+    ],
 };

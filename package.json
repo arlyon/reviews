@@ -4,26 +4,25 @@
   "description": "A review website that loads reviews from json files.",
   "main": "src/index.ts",
   "scripts": {
-    "start": "webpack-dev-server --hot",
-    "build": "webpack",
-    "server": "http-server"
+    "start": "webpack-dev-server",
+    "build": "webpack"
   },
   "author": "arlyon",
   "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "css-loader": "^0.28.5",
-    "html-loader": "^0.5.1",
-    "http-server": "^0.10.0",
-    "style-loader": "^0.18.2",
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "babel-loader": "^8.0.0-beta.2",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
+    "html-loader": "^0.5.5",
+    "style-loader": "^0.21.0",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
-    "ts-loader": "^2.3.4",
-    "typescript": "^2.4.2",
-    "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.7.1"
+    "stylus-loader": "^3.0.2",
+    "ts-loader": "^4.0.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15",
+    "webpack-dev-server": "^3.1.3"
   }
 }
